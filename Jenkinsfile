@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    
+    tools {
+        jdk 'jdk17'
+    }
+
     stages {
         stage ("Compile") {
             steps {
@@ -10,6 +15,13 @@ pipeline {
         stage ("Unit test") {
             steps {
                 sh "./gradlew test"
+            }
+        }
+        // TAHAP BARU:
+        stage ("Code coverage") {
+            steps {
+                sh "./gradlew jacocoTestReport"
+                sh "./gradlew jacocoTestCoverageVerification"
             }
         }
     }
